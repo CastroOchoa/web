@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bienvenidos a Qoriya - Labiales Artesanales</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700&display=swap" rel="stylesheet" />
+    <link href="style.css" rel="stylesheet" />
+  </head>
+  <!-- Header -->
+    <header>
+        <div id="top-header">
+            <div class="container clearfix">
+                <ul class="header-links pull-right">
+                    <li><a href="https://www.facebook.com/share/1QDfjLPAPZ/" target="_blank"><i class="fab fa-facebook-f"></i> Facebook</a></li>
+                    <li><a href="https://www.tiktok.com/@1qoriya1" target="_blank"><i class="fab fa-tiktok"></i> TikTok</a></li>
+               </ul>
+
+                <ul class="header-links pull-right">
+                    <li><a href="#"><i class="fa fa-dollar-sign"></i> Bs</a></li>
+                    <li><a href="#"><i class="fa fa-user"></i> Mi Cuenta</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3">
+                 <div class="header-logo">
+  <a href="#" class="logo">
+    <img src="images/qoriya.jpeg" alt="Logo Qoriya" style="height: 100px;" />
+  </a>
+</div>
+
+
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="header-search">
+                            <form>
+                                <input class="input" placeholder="Buscar productos..." />
+                                <button class="search-btn" type="button">Buscar</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="header-ctn">
+                            <div>
+                                <a href="#"><i class="fa fa-heart"></i><span>Favoritos</span><div class="qty">0</div></a>
+                            </div>
+                            <div class="dropdown">
+                                <a href="#" class="dropdown-toggle">
+                                    <i class="fa fa-shopping-cart"></i><span>Carrito</span><div class="qty" id="cart-count">0</div>
+                                </a>
+                                <div class="cart-dropdown">
+                                    <div class="cart-list" id="cart-items">
+                                        <p>Tu carrito está vacío</p>
+                                    </div>
+                                    <div class="cart-summary">
+                                        <small><span id="item-count">0</span> productos seleccionados</small>
+                                        <h5>SUBTOTAL: Bs <span id="subtotal">0</span></h5>
+                                    </div>
+                                    <div class="cart-btns">
+                                        <a href="#" onclick="viewCart()">Ver Carrito</a>
+                                        <a href="#" onclick="checkout()">Finalizar <i class="fa fa-arrow-right"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav id="navigation">
+        <div class="container">
+            <ul class="main-nav">
+                <li class="active"><a href="#" onclick="showSection('home')">Inicio</a></li>
+                <li><a href="#" onclick="showSection('Productos')">Productos</a></li>
+                <li><a href="#" onclick="showSection('accesorios')">Accesorios</a></li>
+                <li><a href="#" onclick="showSection('nosotros')">Nosotros</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="main-content">
+        <!-- Home Section -->
+        <div id="home-section" class="section">
+            <div class="container">
+                <div class="section-title fade-in">
+                    <h2>Belleza Natural Artesanal</h2>
+                    <p>Descubre nuestra colección de productos de belleza hechos con ingredientes naturales y mucho amor</p>
+                </div>
+                
+            <div id="Productos-section" class="section" style="display: none;">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Labiales Artesanales</h2>
+                    <p>Descubre nuestra colección de labiales hechos a mano con ingredientes 100% naturales</p>
+                </div>
+                <div class="product-showcase">
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k=" alt="Labial Artesanal 3 en 1" class="product-img">
+                            <div class="product-badge">
+                                <span class="badge-text">ECHO A MANO CON AMOR ❤️</span>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">Labial Artesanal 3 en 1</h3>
+                            <div class="product-features">
+                                <span class="feature-badge">🌿 100% Natural</span>
+                                <span class="feature-badge">✨ Ingredientes Puros</span>
+                            </div>
+                            <p class="product-description">
+                                Labial Artesanal 100% Natural elaborado con ingredientes puros y naturales, en un elegante envase de madera fina. Incluye brocha con tapa para una aplicación precisa y práctica. Su fórmula concentrada que nutre hasta un 48% de uso diario.
+                            </p>
+                            <div class="product-price">
+                                <span class="price-old">$55.000.00 COP</span>
+                                <span class="price-current">$51.000.00 COP</span>
+                                <span class="price-discount">Oferta</span>
+                            </div>
+                            <div class="product-actions">
+                                <div class="quantity-selector">
+                                    <button class="qty-btn" onclick="decreaseQty(1)">-</button>
+                                    <input type="number" id="qty-1" value="1" min="1" readonly>
+                                    <button class="qty-btn" onclick="increaseQty(1)">+</button>
+                                </div>
+                                <button class="btn-add-cart" onclick="addToCart(1)">
+                                    <i class="fas fa-shopping-cart"></i>
+                                    Agregar al carrito
+                                </button>
+                                <button class="btn-buy-now" onclick="buyNow(1)">
+                                    Comprar ahora
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k=" alt="Labial Artesanal Rosa Intenso" class="product-img">
+                            <div class="product-badge">
+                                <span class="badge-text">NUEVO ✨</span>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">Labial Artesanal Rosa Intenso</h3>
+                            <div class="product-features">
+                                <span class="feature-badge">🌸 Color Vibrante</span>
+                                <span class="feature-badge">💧 Hidratante</span>
+                            </div>
+                            <p class="product-description">
+                                Labial con pigmentación intensa en tono rosa, perfecto para cualquier ocasión. Formulado con aceites naturales que nutren y protegen tus labios mientras los embellece.
+                            </p>
+                            <div class="product-price">
+                                <span class="price-current">$48.000.00 COP</span>
+                            </div>
+                            <div class="product-actions">
+                                <div class="quantity-selector">
+                                    <button class="qty-btn" onclick="decreaseQty(2)">-</button>
+                                    <input type="number" id="qty-2" value="1" min="1" readonly>
+                                    <button class="qty-btn" onclick="increaseQty(2)">+</button>
+                                </div>
+                                <button class="btn-add-cart" onclick="addToCart(2)">
+                                    <i class="fas fa-shopping-cart"></i>
+                                    Agregar al carrito
+                                </button>
+                                <button class="btn-buy-now" onclick="buyNow(2)">
+                                    Comprar ahora
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="nosotros-section" class="section" style="display: none;">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Sobre Nosotros</h2>
+                    <p>Conoce la historia detrás de Qoriya y nuestra pasión por la belleza natural</p>
+                </div>
+                <div style="background: rgba(255,255,255,0.9); padding: 40px; border-radius: 20px; text-align: center;">
+                    <h3 style="color: #333; margin-bottom: 20px;">Nuestra Historia</h3>
+                    <p style="color: #666; line-height: 1.8; font-size: 16px;">
+                        Qoriya nació de la pasión por crear productos de belleza naturales y artesanales. 
+                        Cada labial y bálsamo es elaborado con ingredientes cuidadosamente seleccionados, 
+                        combinando tradición y modernidad para ofrecerte lo mejor en cosmética natural.
+                    </p>
+                </div>
+            </div>
+        </div>
+                    
+                    <div class="shop fade-in" onclick="showSection('balsamos')">
+                        <div class="shop-img">
+                            <i class="fas fa-spa"></i>
+                        </div>
+                        <div class="shop-body">
+                            <h3>Bálsamos Hidratantes</h3>
+                            <p>Bálsamos nutritivos que mantienen tus labios suaves y protegidos todo el día</p>
+                            <a href="#" class="cta-btn">Explorar <i class="fa fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="shop fade-in" onclick="showSection('accesorios')">
+                        <div class="shop-img">
+                            <i class="fas fa-gift"></i>
+                        </div>
+                        <div class="shop-body">
+                            <h3>Accesorios Qoriya</h3>
+                            <p>Sets de regalo perfectos y accesorios exclusivos para complementar tu rutina de belleza</p>
+                            <a href="#" class="cta-btn">Descubrir <i class="fa fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <div class="features">
+            <div class="container">
+                <div class="features-grid">
+                    <div class="feature">
+                        <i class="fas fa-leaf"></i>
+                        <h4>100% Natural</h4>
+                        <p>Todos nuestros productos están hechos con ingredientes naturales</p>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-hand-holding-heart"></i>
+                        <h4>Hecho a Mano</h4>
+                        <p>Cada producto es elaborado artesanalmente con dedicación y cuidado</p>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-shipping-fast"></i>
+                        <h4>Envío Rápido</h4>
+                        <p>Entrega segura y rápida en todo Bolivia</p>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-award"></i>
+                        <h4>Calidad Premium</h4>
+                        <p>Productos de alta calidad con certificación artesanal</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Products Sections -->
+        <div id="labiales-section" class="section" style="display: none;">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Labiales Naturales</h2>
+                    <p>Colección de labiales artesanales con colores vibrantes y fórmulas naturales</p>
+                </div>
+                <div class="products-grid" id="labiales-products">
+                    <!-- Products will be loaded here -->
+                </div>
+            </div>
+        </div>
+
+        <div id="accesorios-section" class="section" style="display: none;">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Accesorios Qoriya</h2>
+                    <p>Sets de regalo y accesorios exclusivos para completar tu experiencia</p>
+                </div>
+                <div class="products-grid" id="accesorios-products">
+                    <!-- Products will be loaded here -->
+                </div>
+            </div>
+        </div>
+
+        <div id="nosotros-section" class="section" style="display: none;">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Sobre Nosotros</h2>
+                    <p>Conoce la historia detrás de Qoriya y nuestra pasión por la belleza natural</p>
+                </div>
+                <div style="background: rgba(255,255,255,0.9); padding: 40px; border-radius: 20px; text-align: center;">
+                    <h3 style="color: #333; margin-bottom: 20px;">Nuestra Historia</h3>
+                    <p style="color: #666; line-height: 1.8; font-size: 16px;">
+                        Qoriya nació de la pasión por crear productos de belleza naturales y artesanales. 
+                        Cada labial y bálsamo es elaborado con ingredientes cuidadosamente seleccionados, 
+                        combinando tradición y modernidad para ofrecerte lo mejor en cosmética natural.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
