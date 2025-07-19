@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Productos</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container mt-4">
+    <h1 class="mb-4">Nuestros Productos</h1>
+    <div class="row">
+      {% for producto in productos %}
+      <div class="col-md-4 mb-4">
+        <div class="card h-100">
+          {% if producto.imagen %}
+            <img src="{{ producto.imagen }}" class="card-img-top" alt="{{ producto.nombre }}">
+          {% endif %}
+          <div class="card-body">
+            <h5 class="card-title">{{ producto.nombre }}</h5>
+            <p class="card-text">{{ producto.descripcion }}</p>
+            <p class="card-text"><strong>Precio:</strong> Bs {{ producto.precio }}</p>
+            <form method="post" action="{% url 'agregar_al_carrito' producto.id %}">
+  {% csrf_token %}
+  <button type="submit" class="btn btn-primary">Agregar al carrito</button>
+</form>
+
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</body>
+</html>
