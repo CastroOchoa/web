@@ -11,6 +11,8 @@ path('eliminar-producto/', views.eliminar_producto, name='eliminar_producto'),
 path('carrito/actualizar/', views.actualizar_cantidad, name='actualizar_cantidad'),
 path('carrito/eliminar/', views.eliminar_producto, name='eliminar_producto'),
 path('carrito/finalizar/', views.finalizar_pedido, name='finalizar_pedido'),
+path('cuenta/', views.cuenta, name='cuenta'),#cuenta
+path('cuenta/vendedor/', views.panel_vendedor, name='panel_vendedor'),          
 
 
 

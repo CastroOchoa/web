@@ -126,4 +126,9 @@ def eliminar_producto(request):
         request.session['agregados_count'] = len(carrito)
 
     return redirect('ver_carrito')
+# cuenta
+def cuenta(request):
+    return render(request, 'tienda/cuenta.html')
+def panel_vendedor(request):
+    return render(request, 'cuenta/vendedor.html')
 
