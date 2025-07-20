@@ -4,6 +4,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from urllib.parse import quote
 
 def agregar_al_carrito(request, producto_id):
     producto = get_object_or_404(Producto, pk=producto_id)
@@ -68,6 +69,12 @@ def finalizar_pedido(request):
     if not carrito:
         return redirect('ver_carrito')
 
+    # Obtener datos del cliente desde POST
+    nombre = request.POST.get('nombre', '').strip()
+    celular = request.POST.get('celular', '').strip()
+    correo = request.POST.get('correo', '').strip()
+    direccion = request.POST.get('direccion', '').strip()
+    
     mensaje = "🛍️ *Nuevo Pedido*\n"
     total = 0
 
@@ -77,13 +84,19 @@ def finalizar_pedido(request):
         mensaje += f"- {item['nombre']} x{item['cantidad']} = Bs {subtotal:.2f}\n"
 
     mensaje += f"\n💰 *Total a pagar:* Bs {total:.2f}"
-    mensaje += "\n\n📍 Dirección: [Agrega aquí la dirección del cliente]"
-    mensaje += "\n📞 Teléfono: [Agrega aquí el número del cliente]"
-    mensaje += "\n👤 Nombre: [Agrega aquí el nombre del cliente]"
+    mensaje += f"\n\n👤 *Nombre:* {nombre or 'No especificado'}"
+    mensaje += f"\n📞 *Celular:* {celular or 'No especificado'}"
+    mensaje += f"\n📧 *Correo:* {correo or 'No especificado'}"
+    mensaje += f"\n📍 *Dirección:* {direccion or 'No especificada'}"
 
     # Número del vendedor (cambia 5917xxxxxxx por uno real)
     numero_vendedor = "59179730325"
     enlace = f"https://wa.me/{numero_vendedor}?text={quote(mensaje)}"
+
+    # Limpia el carrito después de enviar
+    request.session['carrito'] = {}
+    request.session['agregados_count'] = 0
+
     return redirect(enlace)
 
 #bacia el carrito despues pedido
