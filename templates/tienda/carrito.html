@@ -1,41 +1,208 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <title>Carrito de Compras</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+   body {
+  background: linear-gradient(to right, #ffc1e3, #f9c5d1);
+  color: #d63384;
+}
+
+label,
+h4 {
+  color: #212529; /* Color negro Bootstrap por defecto */
+}
+    .container {
+      background: white;
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    h1, h3 {
+      color: #d63384;
+    }
+    .btn-success {
+      background-color: #d63384;
+      border-color: #d63384;
+    }
+    .btn-success:hover {
+      background-color: #c2185b;
+      border-color: #c2185b;
+    }
+    .btn-quantity {
+      min-width: 32px;
+    }
+  </style>
 </head>
 <body>
-  <div class="container mt-4">
-    <h1>Carrito de Compras</h1>
-    {% if carrito %}
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Producto</th>
-          <th>Precio</th>
-          <th>Cantidad</th>
-          <th>Subtotal</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for item in carrito.values %}
-        <tr>
-          <td>{{ item.nombre }}</td>
-          <td>Bs {{ item.precio }}</td>
-          <td>{{ item.cantidad }}</td>
-          <td>Bs {{ item.cantidad|floatformat:2|add:"0.0"|floatformat:2|add:item.precio|floatformat:2 }}</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-    <h3>Total: Bs {{ total }}</h3>
-    <a href="{% url 'finalizar_pedido' %}" class="btn btn-success">Finalizar pedido</a>
+  <div class="container py-4">
+    <h2>Carrito de Compras</h2>
 
-    {% else %}
-    <p>No hay productos en el carrito.</p>
-    {% endif %}
-    <a href="/" class="btn btn-secondary mt-3">Volver a productos</a>
+    {% if items %}
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Producto</th>
+            <th>Cantidad</th>
+            <th>Precio Unitario</th>
+            <th>Subtotal</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in items %}
+          <tr>
+            <td>{{ item.nombre }}</td>
+            <td>{{ item.cantidad }}</td>
+            <td>Bs {{ item.precio }}</td>
+            <td>Bs {{ item.subtotal }}</td>
+            <td>
+              <!-- Botón Aumentar -->
+              <form method="post" action="{% url 'actualizar_cantidad' %}" class="d-inline">
+                {% csrf_token %}
+                <input type="hidden" name="producto_id" value="{{ item.id }}">
+                <input type="hidden" name="cantidad" value="{{ item.cantidad|add:'1' }}">
+                <button type="submit" class="btn btn-sm btn-success">+</button>
+              </form>
+
+              <!-- Botón Disminuir -->
+              <form method="post" action="{% url 'actualizar_cantidad' %}" class="d-inline">
+                {% csrf_token %}
+                <input type="hidden" name="producto_id" value="{{ item.id }}">
+                <input type="hidden" name="cantidad" value="{{ item.cantidad|add:'-1' }}">
+                <button type="submit" class="btn btn-sm btn-warning" {% if item.cantidad <= 1 %}disabled{% endif %}>−</button>
+              </form>
+
+              <!-- Botón Eliminar -->
+              <form method="post" action="{% url 'eliminar_producto' %}" class="d-inline">
+                {% csrf_token %}
+                <input type="hidden" name="nombre" value="{{ item.nombre }}">
+                <button type="submit" class="btn btn-sm btn-danger">🗑️</button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+          <tr>
+            <td colspan="3"><strong>Total</strong></td>
+            <td colspan="2"><strong>Bs {{ total }}</strong></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <small class="text-muted">Envío a domicilio incluido.</small>
+
+      <!-- Formulario del Cliente -->
+      <h4 class="mt-4">Datos del Cliente</h4>
+<form method="post" id="form-cliente" action="{% url 'finalizar_pedido' %}" novalidate>
+  {% csrf_token %}
+  <div class="mb-3">
+    <label for="nombre" class="form-label">Nombre completo</label>
+    <input type="text" class="form-control" id="nombre" name="nombre" required maxlength="30">
+    <div class="text-danger" id="error-nombre"></div>
   </div>
+  <div class="mb-3">
+    <label for="celular" class="form-label">Celular</label>
+    <input type="text" class="form-control" id="celular" name="celular" required maxlength="8">
+    <div class="text-danger" id="error-celular"></div>
+  </div>
+  <div class="mb-3">
+    <label for="correo" class="form-label">Correo electrónico</label>
+    <input type="email" class="form-control" id="correo" name="correo" required>
+    <div class="text-danger" id="error-correo"></div>
+  </div>
+  <div class="mb-3">
+    <label for="direccion" class="form-label">Dirección de entrega (opcional)</label>
+    <textarea class="form-control" id="direccion" name="direccion" rows="2" maxlength="30"></textarea>
+    <div class="text-danger" id="error-direccion"></div>
+  </div>
+  
+  <div class="d-flex gap-3 mt-4">
+  <button type="submit" class="btn btn-success">Finalizar Pedido</button>
+  <a href="/" class="btn" style="background-color: #0d6efd; color: white;">Volver a productos</a>
+</div>
+
+</form>
+    {% else %}
+      <p>No hay productos en el carrito.</p>
+    {% endif %}
+  </div>
+
+ <script>
+document.getElementById('form-cliente').addEventListener('submit', function(event) {
+  let valid = true;
+
+  const nombre = document.getElementById('nombre');
+  const celular = document.getElementById('celular');
+  const correo = document.getElementById('correo');
+  const direccion = document.getElementById('direccion');
+
+  // Limpia errores anteriores
+  document.getElementById('error-nombre').textContent = "";
+  document.getElementById('error-celular').textContent = "";
+  document.getElementById('error-correo').textContent = "";
+  document.getElementById('error-direccion').textContent = "";
+
+  // Validación del nombre
+  const nombreVal = nombre.value.trim();
+  const nombreRegex = /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$/;
+  if (!nombreVal) {
+    document.getElementById('error-nombre').textContent = "El nombre es obligatorio.";
+    valid = false;
+  } else if (!nombreRegex.test(nombreVal)) {
+    document.getElementById('error-nombre').textContent = "El nombre solo puede contener letras y espacios.";
+    valid = false;
+  } else if (nombreVal.length > 30) {
+    document.getElementById('error-nombre').textContent = "El nombre no debe superar los 30 caracteres.";
+    valid = false;
+  }
+
+  // Validación del celular
+  const celularVal = celular.value.trim();
+  const celularRegex = /^[67][0-9]{7}$/;
+  if (!celularVal) {
+    document.getElementById('error-celular').textContent = "El número de celular es obligatorio.";
+    valid = false;
+  } else if (!celularRegex.test(celularVal)) {
+    document.getElementById('error-celular').textContent = "Debe tener 8 dígitos, comenzar con 6 o 7 y no incluir símbolos.";
+    valid = false;
+  }
+
+  // Validación del correo
+  const correoVal = correo.value.trim();
+  if (!correoVal) {
+    document.getElementById('error-correo').textContent = "El correo electrónico es obligatorio.";
+    valid = false;
+  } else if (!correo.checkValidity()) {
+    document.getElementById('error-correo').textContent = "Ingrese un formato de correo válido.";
+    valid = false;
+  }
+
+  // Validación de dirección (opcional)
+  const direccionVal = direccion.value.trim();
+  const malasPalabras = ["mierda", "puta", "carajo", "estúpido", "idiota"]; // Puedes agregar más
+  if (direccionVal.length > 30) {
+    document.getElementById('error-direccion').textContent = "La dirección no debe superar los 30 caracteres.";
+    valid = false;
+  } else {
+    for (let palabra of malasPalabras) {
+      if (direccionVal.toLowerCase().includes(palabra)) {
+        document.getElementById('error-direccion').textContent = "Por favor, evita usar lenguaje inapropiado.";
+        valid = false;
+        break;
+      }
+    }
+  }
+
+  if (!valid) {
+    event.preventDefault();
+  }
+});
+</script>
+
 </body>
 </html>
+
+

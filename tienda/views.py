@@ -1,30 +1,65 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Producto
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 
 def agregar_al_carrito(request, producto_id):
     producto = get_object_or_404(Producto, pk=producto_id)
     carrito = request.session.get('carrito', {})
 
+    cantidad = int(request.POST.get('cantidad', 1))
     if str(producto_id) in carrito:
-        carrito[str(producto_id)]['cantidad'] += 1
+        carrito[str(producto_id)]['cantidad'] += cantidad
+        
     else:
         carrito[str(producto_id)] = {
             'nombre': producto.nombre,
             'precio': str(producto.precio),
-            'cantidad': 1,
+            'cantidad': cantidad,
+            
         }
 
     request.session['carrito'] = carrito
+    request.session['agregados_count'] = len(carrito)
     return redirect('ver_carrito')
-
 def ver_carrito(request):
     carrito = request.session.get('carrito', {})
-    total = sum(float(item['precio']) * item['cantidad'] for item in carrito.values())
-    return render(request, 'tienda/carrito.html', {'carrito': carrito, 'total': total})
+    total = 0
+    items = []
+
+    for key, item in carrito.items():
+        precio = float(item['precio'])
+        cantidad = item['cantidad']
+        subtotal = precio * cantidad
+        total += subtotal
+        items.append({
+            'id': key,  # Este 'id' se usa en los botones + y -
+            'nombre': item['nombre'],
+            'precio': f"{precio:.2f}",
+            'cantidad': cantidad,
+            'subtotal': f"{subtotal:.2f}",
+        })
+
+    return render(request, 'tienda/carrito.html', {
+        'items': items,
+        'total': f"{total:.2f}",
+        'agregados_count': len(carrito),
+    })
+
+
 
 def lista_productos(request):
     productos = Producto.objects.all()
-    return render(request, 'tienda/productos.html', {'productos': productos})
+    carrito = request.session.get('carrito', {})
+    request.session['agregados_count'] = len(carrito)  # ✅
+
+    return render(request, 'tienda/productos.html', {
+        'productos': productos,
+        'agregados_count': len(carrito),
+    })
+
 #mensaje de whastapp
 from urllib.parse import quote
 
@@ -53,5 +88,42 @@ def finalizar_pedido(request):
 
 #bacia el carrito despues pedido
 
+@require_POST
+def actualizar_cantidad(request):
+    producto_id = str(request.POST.get('producto_id'))  # Convertido a str
 
+    try:
+        nueva_cantidad = int(request.POST.get('cantidad'))
+    except (ValueError, TypeError):
+        return redirect('ver_carrito')
+
+    carrito = request.session.get('carrito', {})
+
+    if producto_id in carrito:
+        if nueva_cantidad > 0:
+            carrito[producto_id]['cantidad'] = nueva_cantidad
+        else:
+            del carrito[producto_id]  # Si es 0, se elimina
+        request.session['carrito'] = carrito
+
+    return redirect('ver_carrito')
+
+@require_POST
+def eliminar_producto(request):
+    nombre = request.POST.get('nombre')
+    carrito = request.session.get('carrito', {})
+    
+    # Elimina producto por nombre
+    producto_id_a_eliminar = None
+    for producto_id, item in carrito.items():
+        if item['nombre'] == nombre:
+            producto_id_a_eliminar = producto_id
+            break
+
+    if producto_id_a_eliminar:
+        del carrito[producto_id_a_eliminar]
+        request.session['carrito'] = carrito
+        request.session['agregados_count'] = len(carrito)
+
+    return redirect('ver_carrito')
 

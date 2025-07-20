@@ -342,10 +342,10 @@
             <i class="fas fa-heart"></i> Favoritos
             <span class="cart-badge">0</span>
           </a>
-          <a href="#" class="account-links">
-            <i class="fas fa-shopping-cart"></i> Carrito
-            <span class="cart-badge">0</span>
-          </a>
+          <a href="{% url 'ver_carrito' %}" class="account-links">
+  <i class="fas fa-shopping-cart"></i> Carrito
+  <span class="badge">{{ agregados_count }}</span>
+</a>
         </div>
       </div>
     </div>
@@ -366,7 +366,15 @@
             <p class="card-text">{{ producto.descripcion }}</p>
             <p class="card-text"><strong>Precio:</strong> Bs {{ producto.precio }}</p>
             <form method="post" action="{% url 'agregar_al_carrito' producto.id %}">
-              {% csrf_token %}
+             {% csrf_token %}
+              <div class="mb-3">
+               <label for="cantidad_{{ producto.id }}" class="form-label">Cantidad:</label>
+                <div class="input-group justify-content-center mb-3" style="max-width: 140px; margin: auto;">
+                 <button type="button" class="btn btn-outline-secondary" onclick="cambiarCantidad('{{ producto.id }}', -1)">−</button>
+                 <input type="text" class="form-control text-center" name="cantidad" id="cantidad_{{ producto.id }}" value="1" readonly>
+                 <button type="button" class="btn btn-outline-secondary" onclick="cambiarCantidad('{{ producto.id }}', 1)">+</button>
+                </div>
+             </div>
               <button type="submit" class="btn btn-primary">Agregar al carrito</button>
             </form>
           </div>
@@ -423,5 +431,13 @@
       });
     });
   </script>
+  <script>
+  function cambiarCantidad(id, cambio) {
+    const input = document.getElementById('cantidad_' + id);
+    let valor = parseInt(input.value) || 1;
+    valor = Math.max(1, valor + cambio);
+    input.value = valor;
+  }
+</script>
 </body>
 </html>
