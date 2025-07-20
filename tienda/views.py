@@ -130,5 +130,5 @@ def eliminar_producto(request):
 def cuenta(request):
     return render(request, 'tienda/cuenta.html')
 def panel_vendedor(request):
-    return render(request, 'cuenta/vendedor.html')
+    return render(request, 'tienda/vendedor.html')
 
