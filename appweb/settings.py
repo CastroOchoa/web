@@ -79,10 +79,10 @@ WSGI_APPLICATION = 'appweb.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgresttt',  # Nombre de la BD (lo último en la URL después del /)
-        'USER': 'postgresttt_user',  # Usuario de la URL
-        'PASSWORD': '3lFzKLp8oW09TbvlIj7HE87tWeI5wHNk',  # Contraseña de la URL
-        'HOST': 'dpg-d1uqkv3uibrs738oe88g-a.oregon-postgres.render.com',  # Host de Render
+        'NAME': 'dbpedido_wjtb',  # Nombre de la BD (lo último en la URL después del /)
+        'USER': 'dbpedido_wjtb_user',  # Usuario de la URL
+        'PASSWORD': 'DRlj9UYKY97if23Ls7YOkHnvYjtNHC26',  # Contraseña de la URL
+        'HOST': 'dpg-d1v3pts9c44c73dguajg-a.oregon-postgres.render.com',  # Host de Render
         'PORT': '5432',  # Puerto por defecto
     }
 }
