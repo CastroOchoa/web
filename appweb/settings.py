@@ -77,13 +77,13 @@ WSGI_APPLICATION = 'appweb.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-     'default': {
+    'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'dbpedido',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'NAME': 'postgresttt',  # Nombre de la BD (lo último en la URL después del /)
+        'USER': 'postgresttt_user',  # Usuario de la URL
+        'PASSWORD': '3lFzKLp8oW09TbvlIj7HE87tWeI5wHNk',  # Contraseña de la URL
+        'HOST': 'dpg-d1uqkv3uibrs738oe88g-a.oregon-postgres.render.com',  # Host de Render
+        'PORT': '5432',  # Puerto por defecto
     }
 }
 
